@@ -82,6 +82,5 @@ try {
     echo "Number of house visited : {$object->day3_1()}" . PHP_EOL;
     echo "Number of house visited : {$object->day3_2()}" . PHP_EOL;
 } catch (Exception $e) {
-    echo 'Error found:';
-    throw $e;
+    throw new RuntimeException($e->getMessage());
 }
