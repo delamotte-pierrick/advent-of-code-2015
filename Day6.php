@@ -49,7 +49,7 @@ class Day6
                         $increase = 1;
                     }
 
-                    // To overcome the bug when $value become superior to 10 (decimal alphabet) and making string 1001 characters,
+                    // To overcome the bug when $value become superior to 9 (decimal alphabet) and making string 1001 characters,
                     // I transform the character in his ascii value to obtain more range on one character length
                     // This solution work only if $value is lower than 78 (78 + 48 = 126 = "~")
                     $value = ord($char) + $increase;
