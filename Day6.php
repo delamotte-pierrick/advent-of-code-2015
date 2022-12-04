@@ -49,12 +49,19 @@ class Day6
                         $increase = 1;
                     }
 
-                    $value = intval($char) + $increase;
-                    if ($value < 0) {
-                        $value = 0;
+                    // To overcome the bug when $value become superior to 10 (decimal alphabet) and making string 1001 characters,
+                    // I transform the character in his ascii value to obtain more range on one character length
+                    // This solution work only if $value is lower than 78 (78 + 48 = 126 = "~")
+                    $value = ord($char) + $increase;
+                    if ($value < 48) {
+                        $value = 48;
                     }
 
-                    return $value;
+                    if ($value > 126) {
+                        throw new Exception("superior to ascii table");
+                    }
+
+                    return chr($value);
                 }, str_split($impacted)));
             };
         };
@@ -78,8 +85,6 @@ class Day6
      */
     private function processingInstructions($callback): int
     {
-//        $gridSize = 100;
-//        $data = trim(file_get_contents('data/input_6_test.txt'));
         $gridSize = 1000;
         $data = trim(file_get_contents('data/input_6.txt'));
         $instructions = array_map(function ($instruction_str) {
@@ -125,7 +130,9 @@ class Day6
 
         echo "Calculating ..." . PHP_EOL;
 
+        // transform the huge array in a string and count each type character and multiply it with his ascii decimal value to obtain the total brightness
         $result = count_chars(implode("", $lights), 1);
+
         return array_sum(
             array_map(function ($value, $key) {
             return $value * ($key - 48);
